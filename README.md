@@ -24,10 +24,16 @@ The installer:
 - creates an nginx config
 - enables the site and restarts nginx
 
-Run:
+Run with domain prompt:
 
 ```bash
 curl -fsSL "https://raw.githubusercontent.com/kzolotarev95/byfox/main/vps/install-vps.sh?v=$(date +%s)" | sudo bash
+```
+
+Or run with domain passed explicitly:
+
+```bash
+curl -fsSL "https://raw.githubusercontent.com/kzolotarev95/byfox/main/vps/install-vps.sh?v=$(date +%s)" | sudo bash -s -- your-domain.com
 ```
 
 After install, open:

@@ -16,6 +16,7 @@ FILES=(
   "styles.css"
   "script.js"
 )
+DOMAIN="${1:-${DOMAIN:-}}"
 
 require_root() {
   if [[ "${EUID}" -ne 0 ]]; then
@@ -43,8 +44,26 @@ trim_value() {
 ask_domain() {
   local input=""
 
+  if [[ -n "${DOMAIN}" ]]; then
+    DOMAIN="$(trim_value "${DOMAIN}")"
+
+    if [[ "${DOMAIN}" =~ ^[A-Za-z0-9.-]+\.[A-Za-z]{2,}$ ]]; then
+      return
+    fi
+
+    echo "Provided domain is invalid: ${DOMAIN}"
+    exit 1
+  fi
+
+  if [[ ! -t 1 ]] && [[ ! -e /dev/tty ]]; then
+    echo "Interactive domain prompt is unavailable."
+    echo "Run the installer like this:"
+    echo "curl -fsSL \"${RAW_BASE}/vps/install-vps.sh?v=\$(date +%s)\" | sudo bash -s -- example.com"
+    exit 1
+  fi
+
   while true; do
-    read -r -p "Enter your domain (example.com): " input
+    read -r -p "Enter your domain (example.com): " input < /dev/tty
     input="$(trim_value "${input}")"
 
     if [[ -z "${input}" ]]; then
