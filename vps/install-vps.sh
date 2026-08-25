@@ -10,6 +10,8 @@ WEB_ROOT="/var/www/byfox/public"
 NGINX_CONF="/etc/nginx/sites-available/byfox.conf"
 LETSENCRYPT_EMAIL="${LETSENCRYPT_EMAIL:-}"
 FILES=(
+  "favicon.ico"
+  "favicon.svg"
   "index.html"
   "offer.html"
   "privacy.html"
