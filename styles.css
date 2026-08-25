@@ -243,8 +243,10 @@ h1 {
   color: var(--text-strong);
   font-size: clamp(2.5rem, 4vw, 4.7rem);
   line-height: 1.02;
-  overflow-wrap: anywhere;
-  hyphens: auto;
+  text-wrap: balance;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
   text-shadow: 0 8px 30px rgba(0, 0, 0, 0.34);
 }
 
@@ -253,16 +255,19 @@ h2 {
   color: var(--text-strong);
   font-size: clamp(1.7rem, 2.8vw, 3rem);
   line-height: 1.08;
-  overflow-wrap: anywhere;
-  hyphens: auto;
+  text-wrap: balance;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
 }
 
 h3 {
   margin: 0;
   color: var(--text-strong);
   font-size: 1.06rem;
-  overflow-wrap: anywhere;
-  hyphens: auto;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
 }
 
 .hero-text,
@@ -733,6 +738,7 @@ h3 {
   .site-header {
     align-items: flex-start;
     flex-direction: column;
+    gap: 14px;
   }
 
   .nav-toggle {
@@ -794,6 +800,7 @@ h3 {
 
   .hero {
     padding: 24px;
+    gap: 18px;
   }
 
   .hero-actions {
@@ -814,6 +821,10 @@ h3 {
   .notice-grid article,
   .contact-columns > div {
     padding: 20px;
+  }
+
+  .section {
+    padding: 24px;
   }
 }
 
@@ -857,6 +868,22 @@ h3 {
     font-size: 0.95rem;
   }
 
+  .nav-toggle {
+    min-height: 46px;
+    padding: 10px 16px;
+  }
+
+  .hero {
+    padding: 16px;
+    gap: 14px;
+  }
+
+  .eyebrow {
+    margin-bottom: 10px;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+  }
+
   .hero-actions,
   .doc-header {
     flex-direction: column;
@@ -873,29 +900,48 @@ h3 {
   }
 
   h1 {
-    font-size: clamp(1.7rem, 9.2vw, 2.45rem);
-    line-height: 1.06;
-    letter-spacing: -0.02em;
+    max-width: none;
+    font-size: clamp(1.3rem, 6.9vw, 1.82rem);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
   }
 
   h2 {
-    font-size: clamp(1.35rem, 8vw, 2rem);
+    font-size: clamp(1.25rem, 6.7vw, 1.8rem);
+    line-height: 1.12;
   }
 
   .button {
-    font-size: 0.96rem;
+    min-height: 50px;
+    font-size: 0.94rem;
   }
 
   .hero-text,
   .section-heading p,
   .contact-note,
   .documents-note {
-    font-size: 0.98rem;
+    font-size: 0.94rem;
+    line-height: 1.6;
+  }
+
+  .hero-points,
+  .panel-card ul,
+  .plan-card ul,
+  .faq-list p,
+  .contact-list,
+  .doc-content p,
+  .doc-content li {
+    font-size: 0.92rem;
+    line-height: 1.6;
   }
 
   .stats {
     gap: 12px;
     padding: 14px;
+  }
+
+  .stats strong {
+    font-size: 1.35rem;
   }
 
   .stats article,
@@ -909,7 +955,21 @@ h3 {
     padding: 18px;
   }
 
+  .faq-list details {
+    padding: 16px 18px;
+  }
+
+  .panel-badge,
+  .plan-name {
+    font-size: 0.7rem;
+  }
+
+  .site-footer {
+    gap: 10px;
+  }
+
   .contact-list li {
     flex-direction: column;
+    gap: 8px;
   }
 }
