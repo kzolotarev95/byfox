@@ -8,6 +8,7 @@ BRANCH="main"
 RAW_BASE="https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}"
 WEB_ROOT="/var/www/byfox/public"
 NGINX_CONF="/etc/nginx/sites-available/byfox.conf"
+LETSENCRYPT_EMAIL="${LETSENCRYPT_EMAIL:-}"
 FILES=(
   "index.html"
   "offer.html"
@@ -85,7 +86,7 @@ install_packages() {
   export DEBIAN_FRONTEND=noninteractive
 
   apt-get update
-  apt-get install -y nginx curl ca-certificates
+  apt-get install -y nginx curl ca-certificates certbot python3-certbot-nginx
 }
 
 download_site() {
@@ -102,7 +103,7 @@ write_nginx_config() {
 server {
     listen 80;
     listen [::]:80;
-    server_name ${DOMAIN} www.${DOMAIN};
+    server_name ${DOMAIN};
 
     root ${WEB_ROOT};
     index index.html;
@@ -135,14 +136,32 @@ reload_nginx() {
   systemctl restart nginx
 }
 
+enable_https() {
+  local certbot_args=(
+    --nginx
+    --non-interactive
+    --agree-tos
+    --redirect
+    -d "${DOMAIN}"
+  )
+
+  if [[ -n "${LETSENCRYPT_EMAIL}" ]]; then
+    certbot_args+=(-m "${LETSENCRYPT_EMAIL}")
+  else
+    certbot_args+=(--register-unsafely-without-email)
+  fi
+
+  certbot "${certbot_args[@]}"
+}
+
 print_done() {
   echo
   echo "Installation complete."
   echo "Website root: ${WEB_ROOT}"
   echo "Domain: ${DOMAIN}"
-  echo "Open: http://${DOMAIN}"
+  echo "Open: https://${DOMAIN}"
   echo
-  echo "If the domain is not opening yet, make sure its DNS A record points to this VPS."
+  echo "If HTTPS did not come up, make sure the DNS A record points to this VPS and ports 80/443 are open."
 }
 
 main() {
@@ -153,6 +172,7 @@ main() {
   download_site
   write_nginx_config
   reload_nginx
+  enable_https
   print_done
 }
 
